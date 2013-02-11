@@ -1,0 +1,5 @@
+A board using a STM32F4 to read data from the Ardupilot using Mavlink protocol and convert it into a lightweight data protocol for the FrSky Telemetry RC receiver.
+
+The code relies on my quan library as well as the mavlink library  and the stm32f4 libraries.
+
+The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
