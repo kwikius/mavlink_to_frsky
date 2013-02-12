@@ -51,7 +51,7 @@ namespace {
    
 }
 
-// return true if have a new heartbeat message from mavlink
+// return number of heartbeats since boot
 uint32_t get_num_heartbeats()
 {
    return  num_heartbeats;
