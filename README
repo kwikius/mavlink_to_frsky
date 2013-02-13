@@ -1,5 +1,52 @@
-A board using a STM32F4 to read data from the Ardupilot using Mavlink protocol and convert it into a lightweight data protocol for the FrSky Telemetry RC receiver.
-
-The code relies on my quan library as well as the mavlink library  and the stm32f4 libraries.
+A board using a STM32F4 to read data from the Ardupilot using Mavlink protocol and 
+convert it into a lightweight data protocol for the FrSky Telemetry RC receiver.
 
 The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
+
+to build the application requires the following prerequisites.
+( You will need to modify the MakeFile to the paths where you have installed these components )
+
+	***C++ compiler for ARM which conforms to the C++11 standard. ***
+	(N.B.Only tested on gcc4.7,gcc4.7.1,gcc4.7.2. If you test another compiler please report any issues) 
+
+		https://launchpad.net/gcc-arm-embedded
+
+			Select gcc4.7
+
+		or
+		https://github.com/prattmic/arm-cortex-m4-hardfloat-toolchain
+
+			(You will need to modify the Makefile to enable C++)
+
+		or
+
+		https://github.com/esden/summon-arm-toolchain
+
+			(Not tested by me)
+
+
+	***STM32F4 standard peripherals library***
+	
+		http://www.st.com/internet/com/SOFTWARE_RESOURCES/SW_COMPONENT/FIRMWARE/stm32f4_dsp_stdperiph_lib.zip
+
+	***quan physical quantities library***
+
+		https://github.com/kwikius/quan-trunk
+
+	***Mavlink protocol library***
+
+		https://github.com/mavlink/mavlink/downloads
+	
+--------------------------------------------------------------
+
+You may wish to try the Application first using the stm32f4 Discovery board.
+Since some pins are already taken on the Discovery Board a different set of pins is used,
+so you will need to modify the "config.hpp" header (https://github.com/kwikius/mavlink_to_frsky/blob/master/config.hpp)
+to define MAVLINK_TO_FRSKY_STM32f4_DISCOVERY_BOARD.
+
+See "resources.hpp" (https://github.com/kwikius/mavlink_to_frsky/blob/master/resources.hpp )
+for the pins used for each version
+
+
+
+
