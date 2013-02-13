@@ -3,7 +3,7 @@
 #define MAVLINK_TO_FRSKY_TIMER_HPP_INCLUDED
 /*
 
- Copyright (c) 2012 Andy Little 11/11/2012
+ Copyright (c) 2012-2013 Andy Little 
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
