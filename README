@@ -4,7 +4,8 @@ convert it into a lightweight data protocol for the FrSky Telemetry RC receiver.
 The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
 
 to build the application requires the following prerequisites.
-( You will need to modify the MakeFile to the paths where you have installed these components )
+( You will need to modify the MakeFile (https://github.com/kwikius/mavlink_to_frsky/blob/master/Makefile)
+to the paths where you have installed these components )
 
 	***C++ compiler for ARM which conforms to the C++11 standard. ***
 	(N.B.Only tested on gcc4.7,gcc4.7.1,gcc4.7.2. If you test another compiler please report any issues) 
