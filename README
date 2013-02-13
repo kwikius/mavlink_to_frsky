@@ -3,7 +3,23 @@ convert it into a lightweight data protocol for the FrSky Telemetry RC receiver.
 
 The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
 
-to build the application requires the following prerequisites.
+---------------------------------------------------------------------------------
+
+You may wish to try the Application first using the stm32f4 Discovery board.
+
+Since some pins are already taken on the Discovery Board a different set of pins is used,
+The discovery_main.bin file (https://github.com/kwikius/mavlink_to_frsky/blob/master/discovery_main.bin)
+is prebuilt for the Discovery board, 
+while the target_main.bin file  (https://github.com/kwikius/mavlink_to_frsky/blob/master/target_main.bin) 
+is prebuilt for flashing the target board. 
+
+See "resources.hpp" (https://github.com/kwikius/mavlink_to_frsky/blob/master/resources.hpp)
+for the pins used for each version
+---------------------------------------------------------------------------------
+To build the Discovery version either use "make Discovery" on the command line or see "config.hpp" for #defines
+To build the version for the target use "make" with no arguments on the command line or see "config.hpp" for #defines
+
+To build the application requires the following prerequisites.
 ( You will need to modify the MakeFile (https://github.com/kwikius/mavlink_to_frsky/blob/master/Makefile)
 to the paths where you have installed these components )
 
@@ -15,6 +31,7 @@ to the paths where you have installed these components )
 			Select gcc4.7
 
 		or
+		
 		https://github.com/prattmic/arm-cortex-m4-hardfloat-toolchain
 
 			(You will need to modify the Makefile to enable C++)
@@ -40,13 +57,7 @@ to the paths where you have installed these components )
 	
 --------------------------------------------------------------
 
-You may wish to try the Application first using the stm32f4 Discovery board.
-Since some pins are already taken on the Discovery Board a different set of pins is used,
-so you will need to modify the "config.hpp" header (https://github.com/kwikius/mavlink_to_frsky/blob/master/config.hpp)
-to define MAVLINK_TO_FRSKY_STM32f4_DISCOVERY_BOARD.
 
-See "resources.hpp" (https://github.com/kwikius/mavlink_to_frsky/blob/master/resources.hpp )
-for the pins used for each version
 
 
 
