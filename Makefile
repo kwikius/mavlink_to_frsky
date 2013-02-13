@@ -15,8 +15,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>
  
 ############################################################
+#  Invoke with 'make Discovery' to build for STM32F4Discovery board
 # **** you will need to modify these to your own paths ***
-
 TOOLCHAIN_PREFIX = /home/andy/arm/arm-cortex-m4-hardfloat-toolchain/
 STM32F4_INCLUDE_PATH = /opt/stm32f4/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/
 MAVLINK_INCLUDE_PATH = /home/andy/website/fpv/mavlink/include/mavlink/v1.0/
@@ -29,7 +29,6 @@ CC1     = $(TOOLCHAIN_PREFIX)bin/arm-none-eabi-gcc
 LD      = $(TOOLCHAIN_PREFIX)bin/arm-none-eabi-g++
 CP      = $(TOOLCHAIN_PREFIX)bin/arm-none-eabi-objcopy
 OD      = $(TOOLCHAIN_PREFIX)bin/arm-none-eabi-objdump
-
 
 STM32F4_LINKER_SCRIPT = stm32f4.ld
 
@@ -55,26 +54,41 @@ ODFLAGS = -d
 
 STARTUP = startup.s
 
-all: test
+.PHONY : all Debug Discovery clean
+
+all : test
 
 Debug : test
 
-objects =  main.o mavlink.o frsky.o serial_port.o system_init.o timer.o setup.o request_mavlink_rates.o
+Discovery : test
+
+ifeq ($(MAKECMDGOALS),Discovery)
+CFLAG_EXTRAS += -DMAVLINK_TO_FRSKY_STM32f4_DISCOVERY_BOARD
+OBJECT_PREFIX = discovery_
+else
+CFLAG_EXTRAS += -DMAVLINK_TO_FRSKY_TARGET_BOARD
+OBJECT_PREFIX = target_
+endif
+
+sources =  main.cpp mavlink.cpp frsky.cpp serial_port.cpp system_init.cpp timer.cpp setup.cpp request_mavlink_rates.cpp
+
+objects =  $(patsubst %.cpp,$(OBJECT_PREFIX)%.o,$(sources))
 
 clean:
-	-rm  $(objects) startup.o main.elf main.lst main.bin
+	-rm -rf *.o *.elf *.lst *.bin
 
-test: main.elf
+test: $(OBJECT_PREFIX)main.elf
 	@ echo "...copying"
-	$(CP) $(CPFLAGS) main.elf main.bin
-	$(OD) $(ODFLAGS) main.elf > main.lst
+	$(CP) $(CPFLAGS) $(OBJECT_PREFIX)main.elf $(OBJECT_PREFIX)main.bin
+	$(OD) $(ODFLAGS) $(OBJECT_PREFIX)main.elf > $(OBJECT_PREFIX)main.lst
 
-main.elf: startup.o $(objects) $(STM32F4_LINKER_SCRIPT)
+$(OBJECT_PREFIX)main.elf: startup.o $(objects) $(STM32F4_LINKER_SCRIPT)
 	@ echo "..linking"
-	$(LD) $(LFLAGS) -o main.elf $(objects) startup.o
+	$(LD) $(LFLAGS) -o $(OBJECT_PREFIX)main.elf $(objects) startup.o
 
-$(objects): %.o : %.cpp
+$(objects): $(OBJECT_PREFIX)%.o : %.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 startup.o: $(STARTUP)
 	$(CC) $(CFLAGS) -o startup.o $(STARTUP) 
+	
