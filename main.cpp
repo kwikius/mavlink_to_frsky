@@ -26,8 +26,6 @@
 
 void setup();
 
-//extern "C" void _init(){}
-
 namespace {
   typedef quan::time_<int32_t>::ms ms;
 
