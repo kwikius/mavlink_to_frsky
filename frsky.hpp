@@ -17,9 +17,8 @@
  You should have received a copy of the GNU General Public License
  along with this program. If not, see <http://www.gnu.org/licenses/>
 */
-
+#include <quan/uav/position.hpp>
 
 void FrSky_send_message();
-
 
 #endif // MAVLINK_TO_FRSKY_FRSKY_HPP_INCLUDED

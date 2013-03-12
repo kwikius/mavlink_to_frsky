@@ -90,7 +90,7 @@ LoopFillZerobss:
 
 /* Call the clock system initialization function.*/
   bl  SystemInit   
-  bl __libc_init_array 
+  bl  __libc_init_array 
   bl  main 
   bx  lr    
 .size  Reset_Handler, .-Reset_Handler

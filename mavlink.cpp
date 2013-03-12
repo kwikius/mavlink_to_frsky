@@ -68,6 +68,8 @@ namespace{
       uint16_t rate;
    };
 
+// The same as the minimosd
+
   mav_sr_t MAVStreams[] = {
       {MAV_DATA_STREAM_RAW_SENSORS,0x02},
       {MAV_DATA_STREAM_EXTENDED_STATUS,0x02},
@@ -190,10 +192,12 @@ namespace {
    }
 
 #ifndef MAVLINK10
+#error wrong version
    void do_mavlink_gps_raw(mavlink_message_t * pmsg)
    {
       the_aircraft.location.lat = quan::angle_<float>::deg{mavlink_msg_gps_raw_get_lat(pmsg)};
       the_aircraft.location.lon = quan::angle_<float>::deg{mavlink_msg_gps_raw_get_lon(pmsg)};
+      
       the_aircraft.gps.fix_type = mavlink_msg_gps_raw_get_fix_type(pmsg);
    }
    void do_mavlink_gps_status(mavlink_message_t * pmsg)
@@ -203,10 +207,12 @@ namespace {
 #else
   void do_mavlink_gps_raw_int(mavlink_message_t * pmsg)
    {
-      the_aircraft.location.lat 
-         = quan::angle_<float>::deg{mavlink_msg_gps_raw_int_get_lat(pmsg) / 1e7f};
-      the_aircraft.location.lon 
-         = quan::angle_<float>::deg{mavlink_msg_gps_raw_int_get_lon(pmsg) / 1e7f};
+      the_aircraft.location.gps_time_stamp = quan::time_<uint64_t>::us{mavlink_msg_gps_raw_int_get_time_usec(pmsg)};
+      the_aircraft.location.gps_lat = quan::angle_<int32_t>::deg10e7{ mavlink_msg_gps_raw_int_get_lat(pmsg) };
+      the_aircraft.location.gps_lon = quan::angle_<int32_t>::deg10e7{ mavlink_msg_gps_raw_int_get_lon(pmsg) };
+      the_aircraft.location.gps_alt = quan::length_<int32_t>::mm{ mavlink_msg_gps_raw_int_get_alt(pmsg) };
+      the_aircraft.location.gps_hdop = quan::length_<uint16_t>::mm{ mavlink_msg_gps_raw_int_get_eph(pmsg) };
+      the_aircraft.location.gps_vdop = quan::length_<int32_t>::mm{ mavlink_msg_gps_raw_int_get_epv(pmsg) };
       the_aircraft.gps.fix_type = mavlink_msg_gps_raw_int_get_fix_type(pmsg);
       the_aircraft.gps.num_sats = mavlink_msg_gps_raw_int_get_satellites_visible(pmsg);
    }
@@ -231,7 +237,8 @@ namespace {
           }
       }
       // mavlink_msg_vfr_hud_get_alt returns height in m
-      the_aircraft.location.alt = quan::length_<float>::m{mavlink_msg_vfr_hud_get_alt(pmsg)};
+      // baroalt
+      the_aircraft.location.baro_alt = quan::length_<float>::m{mavlink_msg_vfr_hud_get_alt(pmsg)};
    }
 
    void do_mavlink_attitude(mavlink_message_t * pmsg)

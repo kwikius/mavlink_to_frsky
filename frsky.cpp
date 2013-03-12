@@ -113,10 +113,10 @@ namespace {
     angle is +- deg  - 180 to 180
     convert to angle of +- deg * 1e7
    */
-   inline int32_t normalise_angle(quan::angle_<float>::deg const & in)
+   inline int32_t normalise_angle(quan::angle_<int32_t>::deg10e7 const & in)
    {
-       static const int64_t ang_max  = 1800000000LL;
-       return static_cast<int32_t>(in.numeric_value() * 1.e7f) % ang_max;
+       constexpr int64_t ang_max  = 1800000000LL;
+       return static_cast<int32_t>(in.numeric_value() % ang_max);
    }
    /* 
    max FrSky update rate is 1200 baud. If this is called at 50 Hz then
@@ -161,7 +161,7 @@ namespace {
    //return actual num of chars written in escapes
    int16_t update_lat_msg1()
    {
-       lat_msg = normalise_angle(the_aircraft.location.lat);
+       lat_msg = normalise_angle(the_aircraft.location.gps_lat);
        return esc_write_sp(lat_msg.get(), 2, true);
    }
    int16_t update_lat_msg2()
@@ -176,7 +176,7 @@ namespace {
    //longtitude
    int16_t update_lon_msg1()
    {
-      lon_msg = normalise_angle(the_aircraft.location.lon);
+      lon_msg = normalise_angle(the_aircraft.location.gps_lon);
       return esc_write_sp(lon_msg.get(), 2, true);
    }
 
@@ -192,7 +192,7 @@ namespace {
    //altitude
    int16_t update_baroalt_msg1()
    {
-      baroalt_msg = static_cast<int32_t>(the_aircraft.location.alt.numeric_value());
+      baroalt_msg = static_cast<int32_t>(the_aircraft.location.baro_alt.numeric_value());
       return esc_write_sp(baroalt_msg.get(),2,true);
    }
    int16_t update_baroalt_msg2()

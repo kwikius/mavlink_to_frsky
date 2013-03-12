@@ -29,11 +29,26 @@
 #include <quan/angle.hpp>
 
 struct location_t{
+/*
    quan::angle_<float>::deg    lat;       
    quan::angle_<float>::deg    lon;
    quan::length_<float>::m     alt;
    location_t():lat{0},lon{0},alt{0}{}
-};
+  
+*/
+   quan::time_<uint64_t>::us                             gps_time_stamp;
+   quan::angle_<int32_t>::deg10e7                        gps_lat;  
+   quan::angle_<int32_t>::deg10e7                        gps_lon; 
+   quan::velocity_<uint16_t>::cm_per_s                   gps_vog;  
+   quan::angle_<uint16_t>::cdeg                          gps_cog;
+   quan::length_<int32_t>::mm                            gps_alt;  
+   quan::length_<uint16_t>::cm                           gps_hdop;
+   quan::length_<uint16_t>::cm                           gps_vdop; 
+   quan::length_<float>::m                               baro_alt;
+   
+   // add timestamp and other info
+   
+ };
 
 struct gps_t{
    uint8_t num_sats;
