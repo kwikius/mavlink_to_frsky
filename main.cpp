@@ -42,6 +42,8 @@ int main()
    for (;;){
 
       read_mavlink();
+
+
       update_frsky();
 
       // blink leds to show we are alive
@@ -70,10 +72,12 @@ namespace {
    /*
      send some frsky data every 1/50th sec
      aactually dont need all the complex time division in FrSky_send_message
+     also could get timestamp info to send periodically
    */
    ms frsky_loop_time{0};
    void update_frsky()
    {
+  // if lat updated etc...
       if( ( millis() - frsky_loop_time ) >= ms{20} ){
          frsky_loop_time += ms{20};
          FrSky_send_message();
