@@ -1,7 +1,6 @@
 #ifndef ARD_MAV_TO_FRSKY_MAVLINK_H_INCLUDED
 #define ARD_MAV_TO_FRSKY_MAVLINK_H_INCLUDED
 
-
 /*
  Copyright (c) 2012 - 2013 Andy Little 
 
@@ -25,7 +24,6 @@
  along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
-
 #define MAVLINK_COMM_NUM_BUFFERS 1
 #define MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -39,7 +37,5 @@ void read_mavlink();
 extern mavlink_system_t mavlink_system;
 
 #include "include/mavlink/v1.0/ardupilotmega/mavlink.h"
-
-
 
 #endif // ARD_MAV_TO_FRSKY_MAVLINK_H_INCLUDED

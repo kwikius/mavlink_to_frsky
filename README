@@ -1,9 +1,14 @@
-A board using a STM32F4 to read data from the Ardupilot using Mavlink protocol and 
-convert it into a lightweight data protocol for the FrSky Telemetry RC receiver.
+A board to read data from the Ardupilot using Mavlink protocol and 
+convert it into a lightweight data protocol for the FrSky Telemetry RC receiver for my Antenna tracker project.
 
 The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
 
----------------------------------------------------------------------------------
+The recommended version is now the arduino version (in the arduino subdirectory). 
+This version uses the Arduino Nano, Arduino Micro or Arduino Pro mini boards, which are available quite cheaply and
+reduce costs and simplify the buidling the airborne side of the Antenan Tracker project.
+
+
+---------------------Notes on the original STM32F4 version------------------------------------------------------------
 
 You may wish to try the Application first using the stm32f4 Discovery board.
 

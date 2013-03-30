@@ -1,6 +1,5 @@
 #ifndef MAVLINK_TO_FRSKY_FRSKY_HPP_INCLUDED
 #define MAVLINK_TO_FRSKY_FRSKY_HPP_INCLUDED
-
 /*
  Copyright (c) 2012 - 2013 Andy Little 
 

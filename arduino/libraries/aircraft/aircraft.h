@@ -21,7 +21,6 @@
 #include <Arduino.h>
 #include <cstdint>
 
-
 //#include <quan/time.hpp>
 //#include <quan/length.hpp>
 //#include <quan/velocity.hpp>
