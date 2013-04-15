@@ -14,19 +14,22 @@
  You should have received a copy of the GNU General Public License
  along with this program. If not, see <http://www.gnu.org/licenses/>
 */
-// defines in http://www.nongnu.org/avr-libc/user-manual/using_tools.html
-// sort board either ATMega328 or ATMega32u4
-
-// architecture is avr5
-// micro is 	__AVR_ATmega32U4__
-// nano etc is 
 
 #include <Arduino.h>
+#include <ctype.h>
 #include <fifo.h>
 #include <aircraft.h>
-#include <mavlink.h>
 #include <asynch_tx.h>
+#include <gps.h>
 #include <frsky.h>
+
+#if defined __AVR_ATmega32U4__
+HardwareSerial & serial_port = Serial1;
+#else
+HardwareSerial & serial_port = Serial;
+#endif
+
+gps the_gps(&serial_port);
 
 namespace {
 
@@ -47,37 +50,39 @@ namespace {
 
    void update_leds()
    {
-      static unsigned long heartbeat_timer = 0;
-      static uint32_t cur_num_heartbeats = 0;
-      static bool heartbeat_led_on = false;
-      uint32_t num_heartbeats = get_num_heartbeats();
-      if ( num_heartbeats > cur_num_heartbeats){
-         // new heartbeat
-         cur_num_heartbeats = num_heartbeats;
-         heartbeat_timer = millis();
-         digitalWrite(HeartbeatLed,HIGH);
-         heartbeat_led_on = true;
-      }else{
-         //turn off heartbeat led after a one shot pulse of 1/4 sec 
-         if ( heartbeat_led_on && (( millis() - heartbeat_timer ) >= 250)){
-           digitalWrite(HeartbeatLed,LOW);
-           heartbeat_led_on = false;
+
+   }
+
+   void setup_GPS()
+   {
+
+    serial_port.begin(9600); 
+
+   }
+
+    void read_GPS(){ 
+#if 0
+      if( serial_port.available()){
+         if(gps.encode(serial_port.read()))
+         {
+            // write updated data
          }
       }
-   }
+#else
+    //  the_gps.parse();
+#endif
+    }
 }
 
 void setup()
 { 
   do_startup_leds(10);
+  setup_GPS();
   cli();
   asynch_tx_setup(9600, true);
   sei();
-#if defined __AVR_ATmega32U4__
-  Serial1.begin(57600); 
-#else
-  Serial.begin(57600); 
-#endif
+// dependent on Arduino
+
 
 }
 
@@ -85,7 +90,7 @@ void setup()
 void loop()
 {
    static unsigned long loop_time = 0;
-   read_mavlink();
+   read_GPS();
 
    if ( millis() - loop_time > 19){
       update_leds();

@@ -1,1 +1,3 @@
 *.o
+/arduino/libraries/AP_GPS/
+/arduino/libraries/TinyGPS/

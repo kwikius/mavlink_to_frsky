@@ -36,7 +36,6 @@ struct location_t{
    int32_t                                               gps_lat;
   // quan::angle_<int32_t>::deg10e7                      gps_lon; 
    int32_t                                               gps_lon;
-  
   // quan::velocity_<uint16_t>::cm_per_s                 gps_vog;  
    int16_t                                               gps_vog; // velocity over ground
  //  quan::angle_<uint16_t>::cdeg                        gps_cog;
@@ -47,10 +46,9 @@ struct location_t{
    uint16_t                                              gps_hdop;
  //  quan::length_<uint16_t>::cm                         gps_vdop; 
    uint16_t                                              gps_vdop;
- //  quan::length_<float>::m                               baro_alt;
+ //  quan::length_<float>::m                             baro_alt;
    float                                                 baro_alt;
- 
-   
+
  };
 
 struct gps_t{

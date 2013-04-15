@@ -33,7 +33,11 @@ mavlink_system_t mavlink_system = {12,1,0,0};
 
 void comm_send_ch(mavlink_channel_t chan, uint8_t ch)
 {
+#if defined __AVR_ATmega32U4__
   Serial1.write(ch);
+#else
+  Serial.write(ch);
+#endif
 }
 
 namespace {
@@ -104,18 +108,22 @@ namespace{
 
 void read_mavlink()
 {
-
    static bool mavlink_active = false;
    static int packet_drops = 0;
    static int  parse_error = 0;
   
    mavlink_message_t msg; 
    mavlink_status_t status;
-   
+#if defined __AVR_ATmega32U4__
    while (Serial1.available() > 0) {
-
-      uint8_t ch = Serial1.read();
-
+#else
+   while (Serial.available() > 0) {
+#endif
+#if defined __AVR_ATmega32U4__
+    uint8_t ch = Serial1.read();
+#else
+    uint8_t ch = Serial.read();
+#endif
       if(mavlink_parse_char(MAVLINK_COMM_0, ch, &msg, &status)) {
          mavlink_active = true;
          switch(msg.msgid) {

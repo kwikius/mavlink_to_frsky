@@ -1,0 +1,16 @@
+digraph G {
+
+ GPS -> AP_GPS_SIRF [ dir = back] ;
+ GPS -> AP_GPS_UBLOX [ dir = back] ;
+ GPS -> AP_GPS_AUTO [ dir = back ] ;
+ GPS -> AP_GPS_MTK [ dir = back ] ;
+ GPS -> AP_GPS_MTK16 [ dir = back ] ;
+ GPS -> AP_GPS_NMEA [ dir = back ] ;
+ GPS -> AP_GPS_None [ dir = back ] ;
+ GPS -> AP_GPS_HIL [ dir = back ] ;
+ GPS -> AP_GPS_Shim [ dir = back ] ;
+
+ AP_GPS_406 -> AP_GPS_SIRF [ dir = back ];
+ 
+ 
+}
