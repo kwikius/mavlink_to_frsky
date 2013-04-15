@@ -14,12 +14,6 @@
  You should have received a copy of the GNU General Public License
  along with this program. If not, see <http://www.gnu.org/licenses/>
 */
-// defines in http://www.nongnu.org/avr-libc/user-manual/using_tools.html
-// sort board either ATMega328 or ATMega32u4
-
-// architecture is avr5
-// micro is 	__AVR_ATmega32U4__
-// nano etc is 
 
 #include <Arduino.h>
 #include <fifo.h>
@@ -73,11 +67,7 @@ void setup()
   cli();
   asynch_tx_setup(9600, true);
   sei();
-#if defined __AVR_ATmega32U4__
   Serial1.begin(57600); 
-#else
-  Serial.begin(57600); 
-#endif
 
 }
 
