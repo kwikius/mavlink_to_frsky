@@ -67,8 +67,11 @@ void setup()
   cli();
   asynch_tx_setup(9600, true);
   sei();
+#if defined __AVR_ATmega32U4_
   Serial1.begin(57600); 
-
+#else
+  Serial.begin(57600); 
+#endif
 }
 
 
