@@ -3,9 +3,35 @@ convert it into a lightweight data protocol for the FrSky Telemetry RC receiver 
 
 The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
 
+** History **
+I have now updated the code to version V1.0
+
 The recommended version is now the arduino version (in the arduino subdirectory). 
-This version uses the Arduino Nano, Arduino Micro or Arduino Pro mini boards, which are available quite cheaply and
-reduce costs and simplify the buidling the airborne side of the Antenan Tracker project.
+This version uses the 5 V 16 MHz Arduino Nano, Arduino Micro or Arduino Pro mini boards, which are available quite cheaply and
+reduce costs and simplify building the airborne side of the Antenan Tracker project.
+
+** Pin Connections **
+
+If there is no other equipment connected to the Ardupilot telemetry Rx pin then the Arduino TX pin
+goes to the telemetry RX pin on the Ardupilot (the same as the MinimOSD), otherwise leave this unconnected 
+else it will conflict with  the other equipment.
+
+If other equipment is connected to the Ardupilot telemetry port then the following will have to be tee'ed to those connections.
+The Arduino  RX goes to the mavlink TX on the Ardupilot (the same as the MinimOSD)
+Arduino GND  goes to GND on the Ardupilot (the same as the MinimOSD)
+
+PIN 9 of the Arduino is the Serial output of Telemetry data to the RC Receiver.
+N.B.  FrSky receivers want an inverted TTL signal which is done in software, so for connection to the telemetry RX input of
+an FrSky receiver, you should connect the Arduino pin 2 to GND ( e.g by soldering or using a jumper).
+
+The device has also been tested with the OpenLRSNG RC system .For those ( and other TTL serial) receivers then leave pin 2 unconnected 
+and the serial output will not be inverted. 
+Note that most OpenLRS  receiver boards run on 3.3 v so the output of arduino pin 9 should be level translated.
+One way to do this is to connect the anode of a red led (, which has a voltage drop odf about 1.8 V)to the Arduino Pin 9 
+and connect a 470 ohm to 10 k ohm resistor from the LED cathode to ground. The output to the OpenLRS RX input should be taken at the
+LED cathode where the LED and resistor join. A high on the arduino pin should have a voltage at the LED cathode of about 3.2 V. 
+(The actual value of the resistor is not critical. A lower value will mean the LED lights up more so you can see the data flow,
+ but uses more power. The voltage drops slightly as the resistor value gets lower, but not much.)
 
 
 ---------------------Notes on the original STM32F4 version------------------------------------------------------------

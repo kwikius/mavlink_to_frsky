@@ -26,6 +26,8 @@ namespace {
 
    static const int HeartbeatLed = 13;
 
+   static const int FrSkySPInvertSignal = 2;
+
    void do_startup_leds(int n)
    {
         pinMode( HeartbeatLed, OUTPUT);   
@@ -63,9 +65,19 @@ namespace {
 
 void setup()
 { 
+  pinMode(FrSkySPInvertSignal, INPUT);       
+  digitalWrite(FrSkySPInvertSignal, HIGH); // turn on internal pullup resistor
   do_startup_leds(10);
   cli();
-  asynch_tx_setup(9600, true);
+
+  /*
+   if the FrSkySPInvertSignal pin is pulled low then 
+   invert the output serial transmitter signal.
+   This is useful for the FrSky receiver which wants an inverted signal
+*/
+ 
+  asynch_tx_setup(9600, !digitalRead(FrSkySPInvertSignal));
+  digitalWrite(FrSkySPInvertSignal, LOW);  // turn off internal pullup resistor to save a bit of power
   sei();
 #if defined __AVR_ATmega32U4_
   Serial1.begin(57600); 
