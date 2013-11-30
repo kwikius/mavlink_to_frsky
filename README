@@ -1,6 +1,8 @@
 A board to read data from the Ardupilot using Mavlink protocol and 
 convert it into a lightweight data protocol for the FrSky Telemetry RC receiver for my Antenna tracker project.
 
+See more about the project at http://www.zoomworks.org/fpv/antenna_tracker/index.html .
+
 The code is available under the GNU GPL license http://www.gnu.org/licenses/gpl.txt
 
 ** History **
